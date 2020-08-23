@@ -1,0 +1,8 @@
+*/target/*
+*/*/target/*
+*/nbactions.xml
+.idea/*
+.idea
+*.iml
+.DS_Store
+logs/*
