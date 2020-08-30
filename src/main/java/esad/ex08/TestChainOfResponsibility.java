@@ -17,6 +17,7 @@ public class TestChainOfResponsibility {
         averageGradeHandler.setSuccessor(failGradeHandler);
 
         Scanner scanner = new Scanner(System.in);
+
         while (true){
             System.out.println("Enter marks for Grade = ");
             int marks =  scanner.nextInt();
