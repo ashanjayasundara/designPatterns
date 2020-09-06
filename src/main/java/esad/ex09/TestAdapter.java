@@ -9,7 +9,7 @@ public class TestAdapter {
        IRemotePerson remotePerson = new RemotePersonImpl();
 
         System.out.println("Person says");
-        System.out.println(person.generateFullAddress());
+        System.out.println(person.generateFullName());
         System.out.println(person.generateFullAddress());
 
         System.out.println("\n Remote Persona says");
