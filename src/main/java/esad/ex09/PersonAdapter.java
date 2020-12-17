@@ -4,7 +4,7 @@ package esad.ex09;
  * @author ashan on 2020-09-06
  */
 public class PersonAdapter implements IPerson {
-    IRemotePerson remotePerson;
+    public IRemotePerson remotePerson;
 
     public PersonAdapter(IRemotePerson remotePerson) {
         this.remotePerson = remotePerson;
@@ -27,5 +27,9 @@ public class PersonAdapter implements IPerson {
             stringBuilder.append("\n").append(content);
         }
         return stringBuilder.toString();
+    }
+
+    public final class Nums {
+
     }
 }
