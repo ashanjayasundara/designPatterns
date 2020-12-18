@@ -16,16 +16,20 @@ public class CustomerInfo {
     private String expiredDate = "";
     private String isCurrent = "TRUE";
 
+    String excapeSpecialCharacters(String value) {
+        return value.replaceAll("[^a-zA-Z0-9]", " ");
+    }
+
     public String getActiveDate() {
-        return activeDate;
+        return excapeSpecialCharacters(activeDate.trim());
     }
 
     public String getExpiredDate() {
-        return expiredDate;
+        return excapeSpecialCharacters(expiredDate.trim());
     }
 
     public String getIsCurrent() {
-        return isCurrent;
+        return excapeSpecialCharacters(isCurrent.trim());
     }
 
     public int getCustomerSK() {
@@ -72,23 +76,23 @@ public class CustomerInfo {
     }
 
     String getName() {
-        return name;
+        return excapeSpecialCharacters(name.trim());
     }
 
     String getRegion() {
-        return region;
+        return excapeSpecialCharacters(region.trim());
     }
 
     String getProvince() {
-        return province;
+        return excapeSpecialCharacters(province.trim());
     }
 
     String getCustType() {
-        return custType;
+        return excapeSpecialCharacters(custType.trim());
     }
 
     String getCustID() {
-        return custID;
+        return excapeSpecialCharacters(custID.trim());
     }
 
     CustomerInfo setName(String name) {
@@ -106,8 +110,8 @@ public class CustomerInfo {
     }
 
     String writeSQL() {
-        return MessageFormat.format("INSERT INTO Dim_Customer(CustomerSK,CustomerID,CustomerName,Province,Region,CustomerType,ActivatedDate,ExpiredDate,IsCurrent) VALUES ({0},''{1}'',''{2}'',''{3}'',''{4}'',''{5}'',''{6}'',''{7}'',''{8}'',);\n",
-                getCustomerSK(), getCustID(), getName(), getProvince(), getRegion(), getCustType(), getActiveDate(), getExpiredDate(), getIsCurrent());
+        return MessageFormat.format("INSERT INTO Dim_Customer(CustomerSK,CustomerID,CustomerName,Province,Region,CustomerType,ActivatedDate,ExpiredDate,IsCurrent) VALUES ( {0},''{1}'',''{2}'',''{3}'',''{4}'',''{5}'',''{6}'',''{7}'',''{8}'');\n",
+                getCustomerSK() + "", getCustID(), getName(), getProvince(), getRegion(), getCustType(), getActiveDate(), getExpiredDate(), getIsCurrent());
     }
 }
 
