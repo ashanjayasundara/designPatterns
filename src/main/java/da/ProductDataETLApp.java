@@ -3,6 +3,7 @@ package da;
 
 import utils.CsvReader;
 import utils.CsvWriter;
+import utils.FileUtils;
 
 import java.io.BufferedWriter;
 import java.nio.charset.StandardCharsets;
@@ -67,6 +68,9 @@ public class ProductDataETLApp {
 
         }
 
+        FileUtils.createFile(dimProductDataFilePath);
+        FileUtils.createFile(dimProductSQLFilePath);
+
         try (CsvWriter writer = new CsvWriter(dimProductDataFilePath)) {
             writer.setHeader(new String[]{"ProductSK", "StockCode", "Product Name", "Description", "Brand", "Item Number", "Package Size", "Category", "UnitPrice", "Discount", "Available", "ActivatedDate", "ExpiredDate", "IsCurrent"});
             DimProductInfoMap.values().forEach(dimProductInfo -> {
@@ -76,9 +80,11 @@ public class ProductDataETLApp {
 
         Path filePath = Paths.get(dimProductSQLFilePath);
         try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
+            writer.write("SET IDENTITY_INSERT Dim_Product ON\n\n");
             for (DimProductInfo dimProductInfo : DimProductInfoMap.values()) {
                 writer.write(dimProductInfo.writeSQL());
             }
+            writer.write("\nSET IDENTITY_INSERT Dim_Product OFF\n\n");
         }
 
         System.out.println("Product Info Transformation Completed");

@@ -2,6 +2,7 @@ package da;
 
 import utils.CsvReader;
 import utils.CsvWriter;
+import utils.FileUtils;
 
 import java.io.BufferedWriter;
 import java.nio.charset.StandardCharsets;
@@ -62,6 +63,9 @@ public class CustomerDataETLApp {
 
         }
 
+        FileUtils.createFile(customerETLFilePath);
+        FileUtils.createFile(customerETLSQLPath);
+        
         try (CsvWriter writer = new CsvWriter(customerETLFilePath)) {
             writer.setHeader(new String[]{"CustomerSK", "CustomerID", "CustomerName", "Province", "Region", "CustomerType", "ActivatedDate", "ExpiredDate", "IsCurrent"});
             for (CustomerInfo customerInfo : transfromedCustList) {
@@ -70,9 +74,11 @@ public class CustomerDataETLApp {
         }
         Path filePath = Paths.get(customerETLSQLPath);
         try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
+            writer.write("SET IDENTITY_INSERT Dim_Customer ON\n\n");
             for (CustomerInfo customerInfo : transfromedCustList) {
                 writer.write(customerInfo.writeSQL());
             }
+            writer.write("\nSET IDENTITY_INSERT Dim_Customer OFF\n\n");
         }
         System.out.println("Customer Info Transformation Completed");
     }
