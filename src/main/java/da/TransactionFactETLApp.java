@@ -1,13 +1,16 @@
 package da;
 
+import org.apache.commons.collections4.ListUtils;
 import utils.CsvReader;
 import utils.CsvWriter;
+import utils.FileUtils;
 
 import java.io.BufferedWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +29,8 @@ public class TransactionFactETLApp {
         String dimCustomerDataFilePath = ROOT_FOLDER_PATH + "CustomerDimension.csv";
         String dimProductDataFilePath = ROOT_FOLDER_PATH + "ProductDimension.csv";
 
-        String factTransactionETLFilePath = ROOT_FOLDER_PATH + "FactTransaction.csv";
-        String factTransactionDataFilePath = ROOT_FOLDER_PATH + "FactTransaction.sql";
+        String factTransactionETLFilePath = ROOT_FOLDER_PATH + "FactTransaction/FactTransaction.csv";
+        String factTransactionDataFilePath = ROOT_FOLDER_PATH + "FactTransaction/FactTransaction_{0}.sql";
 
         Map<String, CustomerInfo> customerInfoMap = new HashMap<>();
         Map<String, DimProductInfo> productInfoMap = new HashMap<>();
@@ -107,12 +110,18 @@ public class TransactionFactETLApp {
             });
         }
         System.out.println("Fact Transaction CSV file generated");
-
-        Path filePath = Paths.get(factTransactionDataFilePath);
-        try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
-            for (FactTransactionInfo factTransactionInfo : factTransactionInfoList) {
-                writer.write(factTransactionInfo.writeSQL());
+        int partitionID = 1;
+        List<List<FactTransactionInfo>> partitionedList = ListUtils.partition(factTransactionInfoList, 50000);
+        for (List<FactTransactionInfo> subTransactionList : partitionedList) {
+            String pathName = MessageFormat.format(factTransactionDataFilePath, partitionID);
+            FileUtils.createFile(pathName);
+            Path filePath = Paths.get(pathName);
+            try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
+                for (FactTransactionInfo factTransactionInfo : subTransactionList) {
+                    writer.write(factTransactionInfo.writeSQL());
+                }
             }
+            partitionID++;
         }
 
         System.out.println("Fact Transaction SQL file generated");
