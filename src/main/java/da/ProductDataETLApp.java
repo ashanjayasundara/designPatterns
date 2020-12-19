@@ -22,8 +22,8 @@ public class ProductDataETLApp {
     public void generate() throws Exception {
         String transactionFilePath = ROOT_FOLDER_PATH + "Online Retail.csv";
         String productDataFilePath = ROOT_FOLDER_PATH + "product.csv";
-        String dimProductDataFilePath = ROOT_FOLDER_PATH + "ProductDimension.csv";
-        String dimProductSQLFilePath = ROOT_FOLDER_PATH + "ProductDimension.sql";
+        String dimProductDataFilePath = ROOT_FOLDER_PATH + "ProductDimension/ProductDimension.csv";
+        String dimProductSQLFilePath = ROOT_FOLDER_PATH + "ProductDimension/ProductDimension.sql";
 
         Map<String, InvoiceProductInfo> invoiceProductInfoMap = new HashMap<>();
         Map<String, ProductDetails> productDetailsMap = new HashMap<>();

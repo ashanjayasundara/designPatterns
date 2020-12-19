@@ -69,7 +69,7 @@ public class FactTransactionInfo {
     }
 
     String writeSQL() {
-        return MessageFormat.format("INSERT INTO Fact_OnlineRetailTransactionInfo(InvoiceNo,ProductSK,CustomerSK,DateSK,Quantity,UnitPrice,Discount,GrossAmount,ItemDiscount,NetAmount,Cost,Profit,County) VALUES " +
+        return MessageFormat.format("INSERT INTO Fact_OnlineRetailTransactionInfo(InvoiceNo,ProductSK,CustomerSK,DateSK,Quantity,UnitPrice,Discount,GrossAmount,ItemDiscount,NetAmount,Cost,Profit) VALUES " +
                         "(''{0}'',{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11});\n",
                 transactionDetails.getInvoiceNo(), productInfo.getProductSK() + "", customerInfo.getCustomerSK() + "", transactionDetails.getDateSK() + "", transactionDetails.getQty() + "", productInfo.getUnitPrice() + "", productInfo.getDiscount() + "", getGrossAmount() + "", getItemDiscount() + "",
                 getNetAmount() + "", getCost() + "", getProfit() + "");

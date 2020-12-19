@@ -23,8 +23,8 @@ public class CustomerDataETLApp {
     public void generateFile() throws Exception {
         String transactionFilePath = ROOT_FOLDER_PATH + "Online Retail.csv";
         String customerInfoFilePath = ROOT_FOLDER_PATH + "cust_dimen.csv";
-        String customerETLFilePath = ROOT_FOLDER_PATH + "CustomerDimension.csv";
-        String customerETLSQLPath = ROOT_FOLDER_PATH + "CustomerDimension.sql";
+        String customerETLFilePath = ROOT_FOLDER_PATH + "CustomerDimension/CustomerDimension.csv";
+        String customerETLSQLPath = ROOT_FOLDER_PATH + "CustomerDimension/CustomerDimension.sql";
 
         Set<String> uniqueID = new HashSet<>();
         List<CustomerInfo> customerInfoList = new ArrayList<>();
@@ -65,7 +65,7 @@ public class CustomerDataETLApp {
 
         FileUtils.createFile(customerETLFilePath);
         FileUtils.createFile(customerETLSQLPath);
-        
+
         try (CsvWriter writer = new CsvWriter(customerETLFilePath)) {
             writer.setHeader(new String[]{"CustomerSK", "CustomerID", "CustomerName", "Province", "Region", "CustomerType", "ActivatedDate", "ExpiredDate", "IsCurrent"});
             for (CustomerInfo customerInfo : transfromedCustList) {

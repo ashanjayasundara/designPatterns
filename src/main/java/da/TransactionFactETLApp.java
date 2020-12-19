@@ -29,7 +29,7 @@ public class TransactionFactETLApp {
         String dimCustomerDataFilePath = ROOT_FOLDER_PATH + "CustomerDimension.csv";
         String dimProductDataFilePath = ROOT_FOLDER_PATH + "ProductDimension.csv";
 
-        String factTransactionETLFilePath = ROOT_FOLDER_PATH + "FactTransaction.csv";
+        String factTransactionETLFilePath = ROOT_FOLDER_PATH + "FactTransaction/FactTransaction.csv";
         String factTransactionDataFilePath = ROOT_FOLDER_PATH + "FactTransaction/FactTransaction_{0}.sql";
 
         Map<String, CustomerInfo> customerInfoMap = new HashMap<>();
