@@ -25,9 +25,9 @@ import static da.CustomerDataETLApp.ROOT_FOLDER_PATH;
  */
 public class TransactionFactETLApp {
     public void generate() throws Exception {
-        String transactionFilePath = new StringBuilder().append(ROOT_FOLDER_PATH).append("Online Retail.csv").toString();
-        String dimCustomerDataFilePath = ROOT_FOLDER_PATH + "CustomerDimension.csv";
-        String dimProductDataFilePath = ROOT_FOLDER_PATH + "ProductDimension.csv";
+        String transactionFilePath = ROOT_FOLDER_PATH + "Online Retail.csv";
+        String dimCustomerDataFilePath = ROOT_FOLDER_PATH + "CustomerDimension/CustomerDimension.csv";
+        String dimProductDataFilePath = ROOT_FOLDER_PATH + "ProductDimension/ProductDimension.csv";
 
         String factTransactionETLFilePath = ROOT_FOLDER_PATH + "FactTransaction/FactTransaction.csv";
         String factTransactionDataFilePath = ROOT_FOLDER_PATH + "FactTransaction/FactTransaction_{0}.sql";
@@ -102,7 +102,7 @@ public class TransactionFactETLApp {
             }
         }
         System.out.println("Transformation Failed Count " + errorCount);
-
+        FileUtils.createFile(factTransactionETLFilePath);
         try (CsvWriter writer = new CsvWriter(factTransactionETLFilePath)) {
             writer.setHeader(new String[]{"InvoiceNo", "ProductSK", "CustomerSK", "DateSK", "Quantity", "UnitPrice", "Discount", "GrossAmount", "ItemDiscount", "NetAmount", "Cost", "Profit", "Country"});
             factTransactionInfoList.forEach(dimProductInfo -> {
