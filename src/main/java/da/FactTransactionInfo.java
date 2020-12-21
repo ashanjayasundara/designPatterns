@@ -65,7 +65,7 @@ public class FactTransactionInfo {
 
     String[] writeLine() {
         return new String[]{transactionDetails.getInvoiceNo(), productInfo.getProductSK() + "", customerInfo.getCustomerSK() + "", transactionDetails.getDateSK() + "",
-                transactionDetails.getQty() + "", productInfo.getDiscount() + "", getGrossAmount() + "", getItemDiscount() + "", getNetAmount() + "" + getCost() + "", getProfit() + "", transactionDetails.getCountry()};
+                transactionDetails.getQty() + "", productInfo.getUnitPrice() + "", productInfo.getDiscount() + "", getGrossAmount() + "", getItemDiscount() + "", getNetAmount() + "", getCost() + "", getProfit() + "", transactionDetails.getCountry()};
     }
 
     String writeSQL() {
